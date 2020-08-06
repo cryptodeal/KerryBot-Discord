@@ -11,9 +11,7 @@ client.login(process.env.BOT_TOKEN);
 const handleRegistration = (data) => {
   if(data.site.open_registration !== isOpen){
     isOpen = data.site.open_registration
-    return;
-    //isOpen == true ? client.channels.cache.get('739624816902012928').send(`@here, Chapo.Chat changed registration status to OPEN`) : client.channels.cache.get('740815431853539401').send(`@here, Chapo.Chat changed registration status to CLOSED`)
-    //client.channels.get(channelID).send();
+    isOpen == true ? client.channels.cache.get('739624816902012928').send(`@here, Chapo.Chat changed registration status to OPEN`) : client.channels.cache.get('740815431853539401').send(`@here, Chapo.Chat changed registration status to CLOSED`)
   } else {
     return;
   }
@@ -44,7 +42,6 @@ client.on('message', message => {
       ws2.send(JSON.stringify({
         op: 'GetUserDetails',
         data: {
-          //auth: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NDk4MiwidXNlcm5hbWUiOiJLZXJyeU1vZCIsImlzcyI6Ind3dy5jaGFwby5jaGF0Iiwic2hvd19uc2Z3IjpmYWxzZSwidGhlbWUiOiJkYXJrbHkiLCJkZWZhdWx0X3NvcnRfdHlwZSI6MCwiZGVmYXVsdF9saXN0aW5nX3R5cGUiOjEsImxhbmciOiJicm93c2VyIiwiYXZhdGFyIjpudWxsLCJzaG93X2F2YXRhcnMiOnRydWV9.6bN41dIeO7KdOspfo8EW9LoF5uLp-WQ_62nu2GVEnpk",
           limit: 20,
           page: 1,
           saved_only: false,
