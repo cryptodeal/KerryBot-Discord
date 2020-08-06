@@ -7,11 +7,10 @@ const host = 'www.chapo.chat';
 const client = new Discord.Client();
 client.login(process.env.BOT_TOKEN);
 
-
 const handleRegistration = (data) => {
   if(data.site.open_registration !== isOpen){
     isOpen = data.site.open_registration
-    isOpen == true ? client.channels.cache.get('739624816902012928').send(`@here, Chapo.Chat changed registration status to OPEN`) : client.channels.cache.get('740815431853539401').send(`@here, Chapo.Chat changed registration status to CLOSED`)
+    isOpen == true ? client.channels.cache.get('740815431853539401').send(`@here, Chapo.Chat changed registration status to OPEN`) : client.channels.cache.get('740815431853539401').send(`@here, Chapo.Chat changed registration status to CLOSED`)
   } else {
     return;
   }
@@ -109,7 +108,7 @@ ws.on('open', () => {
         }
       }
     } catch (e) {
-        console.error(e);
+      console.error(e);
     }
   });
   isRegistrationOpen();
