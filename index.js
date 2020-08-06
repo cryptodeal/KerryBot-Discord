@@ -33,7 +33,7 @@ client.on('message', message => {
   const commandBody = message.content.slice(prefix.length);
   const args = commandBody.split(' ');
   const command = args.shift().toLowerCase();
-  console.log(command)
+  console.log(command);
 
   if (command === "bancheck") {
     var ws2 = new WebSocket('wss://' + host + '/api/v1/ws');
