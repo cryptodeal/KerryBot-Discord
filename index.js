@@ -11,7 +11,8 @@ client.login(process.env.BOT_TOKEN);
 const handleRegistration = (data) => {
   if(data.site.open_registration !== isOpen){
     isOpen = data.site.open_registration
-    isOpen == true ? client.channels.cache.get('739624816902012928').send(`@here, Chapo.Chat changed registration status to OPEN`) : client.channels.cache.get('740815431853539401').send(`@here, Chapo.Chat changed registration status to CLOSED`)
+    return;
+    //isOpen == true ? client.channels.cache.get('739624816902012928').send(`@here, Chapo.Chat changed registration status to OPEN`) : client.channels.cache.get('740815431853539401').send(`@here, Chapo.Chat changed registration status to CLOSED`)
     //client.channels.get(channelID).send();
   } else {
     return;
@@ -52,47 +53,40 @@ client.on('message', message => {
           username: args[0]
         }
       }));
-      ws2.on('message', (msg) => {
-        try {
-          const res = JSON.parse(msg);
-          //console.log(res)
-          switch (res.op) {
-            case 'GetUserDetails': {
-              return res.data.user.banned == true ? message.channel.send(`${res.data.user.name} is banned!`) : message.channel.send(`${res.data.user.name} is not banned!`)
-            }
-            default: {
-              break;
-            }
-          }
-        } catch (e) {
-            console.error(e);
+    });
+    ws2.on('message', (msg) => {
+      try {
+        const res = JSON.parse(msg);
+        if(res.error){
+          message.channel.send(`Chapo Error: ${res.error}`)
+        } else {
+          res.data.user.banned == true ? message.channel.send(`${res.data.user.name} is banned!`) : message.channel.send(`${res.data.user.name} is not banned!`);
         }
-      });
+      } catch (e) {
+          console.error(e);
+      }
     });
   } else if(command === 'regstatus') {
     var ws3 = new WebSocket('wss://' + host + '/api/v1/ws');
     ws3.on('open', () => {
-      console.log('WS2 connection succeed!');
+      console.log('WS3 connection succeed!');
       ws3.send(JSON.stringify({
         op: 'GetSite',
         data: {}
       }));
-      ws3.on('message', (msg) => {
-        try {
-          const res = JSON.parse(msg);
-          //console.log(res)
-          switch (res.op) {
-            case 'GetSite': {
-              return res.data.site.open_registration == true ? message.channel.send(`@here, Chapo.Chat changed registration status to OPEN`) : message.channel.send(`@here, Chapo.Chat changed registration status to CLOSED`)
-            }
-            default: {
-              break;
-            }
-          }
-        } catch (e) {
-            console.error(e);
+    });
+    ws3.on('message', (msg) => {
+      try {
+        const res = JSON.parse(msg);
+        //console.log(res)
+        if(res.error){
+          message.channel.send(`Chapo Error: ${res.error}`)
+        } else {
+          res.data.site.open_registration == true ? message.channel.send(`@here, Chapo.Chat changed registration status to OPEN`) : message.channel.send(`@here, Chapo.Chat changed registration status to CLOSED`)
         }
-      });
+      } catch (e) {
+          console.error(e);
+      }
     });
   }
 });
@@ -103,13 +97,18 @@ ws.on('open', () => {
   ws.on('message', (msg) => {
     try {
       const res = JSON.parse(msg);
+      if(res.error){
+        console.log(res.error)
+        return;
+      } else {
       //console.log(res)
-      switch (res.op) {
-        case 'GetSite': {
-          return handleRegistration(res.data);
-        }
-        default: {
-          break;
+        switch (res.op) {
+          case 'GetSite': {
+            return handleRegistration(res.data);
+          }
+          default: {
+            break;
+          }
         }
       }
     } catch (e) {
