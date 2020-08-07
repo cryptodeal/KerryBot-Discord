@@ -76,7 +76,7 @@ client.on('message', message => {
         const res = JSON.parse(msg);
         //console.log(res)
         if(res.error){
-          return message.channel.send(`Chapo Error: ${res.error}`)
+          return message.channel.send(`Chapo Error: ${res.error}`, {tts: true})
         } else {
           return res.data.site.open_registration == true ? message.channel.send(`Chapo.Chat registration is OPEN`, {tts: true}) : message.channel.send(`Chapo.Chat registration is CLOSED`, {tts: true})
         }
