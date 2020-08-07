@@ -54,9 +54,9 @@ client.on('message', message => {
       try {
         const res = JSON.parse(msg);
         if(res.error){
-          message.channel.send(`Chapo Error: ${res.error}`)
+          return message.channel.send(`Chapo Error: ${res.error}`)
         } else {
-          res.data.user.banned == true ? message.channel.send(`${res.data.user.name} is banned!`) : message.channel.send(`${res.data.user.name} is not banned!`);
+          return res.data.user.banned == true ? message.channel.send(`${res.data.user.name} is banned!`) : message.channel.send(`${res.data.user.name} is not banned!`);
         }
       } catch (e) {
           console.error(e);
@@ -76,9 +76,9 @@ client.on('message', message => {
         const res = JSON.parse(msg);
         //console.log(res)
         if(res.error){
-          message.channel.send(`Chapo Error: ${res.error}`)
+          return message.channel.send(`Chapo Error: ${res.error}`)
         } else {
-          res.data.site.open_registration == true ? message.channel.send(`@here, Chapo.Chat changed registration status to OPEN`) : message.channel.send(`@here, Chapo.Chat changed registration status to CLOSED`)
+          return res.data.site.open_registration == true ? message.channel.send(`@here, Chapo.Chat changed registration status to OPEN`) : message.channel.send(`@here, Chapo.Chat changed registration status to CLOSED`)
         }
       } catch (e) {
           console.error(e);
