@@ -56,7 +56,7 @@ client.on('message', message => {
         if(res.error){
           return message.channel.send(`Chapo Error: ${res.error}`)
         } else {
-          return res.data.user.banned == true ? message.channel.send(`${res.data.user.name} is banned!`) : message.channel.send(`${res.data.user.name} is not banned!`);
+          return res.data.user.banned == true ? message.channel.send(`${res.data.user.name} is banned!`, {tts: true}) : message.channel.send(`${res.data.user.name} is not banned!`, {tts: true});
         }
       } catch (e) {
           console.error(e);
@@ -100,7 +100,7 @@ client.on('message', message => {
         if(res.error){
           return message.channel.send(`Chapo Error: ${res.error}`)
         } else {
-          return message.channel.send(`${res.data.banned.length} users banned by Chapo's fascist mods`)
+          return message.channel.send(`${res.data.banned.length} users banned by Chapo's fascist mods`, {tts: true})
         }
       } catch (e) {
           console.error(e);
