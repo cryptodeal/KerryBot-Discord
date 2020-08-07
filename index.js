@@ -78,7 +78,7 @@ client.on('message', message => {
         if(res.error){
           return message.channel.send(`Chapo Error: ${res.error}`)
         } else {
-          return res.data.site.open_registration == true ? message.channel.send(`@here, Chapo.Chat changed registration status to OPEN`) : message.channel.send(`@here, Chapo.Chat changed registration status to CLOSED`)
+          return res.data.site.open_registration == true ? message.channel.send(`Chapo.Chat registration is OPEN`) : message.channel.send(`Chapo.Chat registration is CLOSED`)
         }
       } catch (e) {
           console.error(e);
