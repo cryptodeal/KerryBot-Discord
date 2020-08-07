@@ -84,6 +84,30 @@ client.on('message', message => {
           console.error(e);
       }
     });
+  } else if(command === 'bancount'){
+    var ws4 = new WebSocket('wss://' + host + '/api/v1/ws');
+    ws4.on('open', () => {
+      console.log('WS3 connection succeed!');
+      ws4.send(JSON.stringify({
+        op: 'GetSite',
+        data: {}
+      }));
+    });
+    ws4.on('message', (msg) => {
+      try {
+        const res = JSON.parse(msg);
+        //console.log(res)
+        if(res.error){
+          return message.channel.send(`Chapo Error: ${res.error}`)
+        } else {
+          return message.channel.send(`${res.data.banned.length} users banned by Chapo's fascist mods`)
+        }
+      } catch (e) {
+          console.error(e);
+      }
+    });
+  } else {
+    return;
   }
 });
 
