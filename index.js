@@ -56,7 +56,7 @@ client.on('message', message => {
         if(res.error){
           return message.channel.send(`Chapo Error: ${res.error}`)
         } else {
-          return res.data.user.banned == true ? message.channel.send(`/tts ${res.data.user.name} is banned!`) : message.channel.send(`/tts ${res.data.user.name} is not banned!`);
+          return res.data.user.banned == true ? message.channel.send(`${res.data.user.name} is banned!`, {tts: true}) : message.channel.send(`${res.data.user.name} is not banned!`, {tts: true});
         }
       } catch (e) {
           console.error(e);
@@ -78,7 +78,7 @@ client.on('message', message => {
         if(res.error){
           return message.channel.send(`Chapo Error: ${res.error}`)
         } else {
-          return res.data.site.open_registration == true ? message.channel.send(`/tts Chapo.Chat registration is OPEN`) : message.channel.send(`Chapo.Chat registration is CLOSED`)
+          return res.data.site.open_registration == true ? message.channel.send(`Chapo.Chat registration is OPEN`, {tts: true}) : message.channel.send(`Chapo.Chat registration is CLOSED`, {tts: true})
         }
       } catch (e) {
           console.error(e);
@@ -98,9 +98,9 @@ client.on('message', message => {
         const res = JSON.parse(msg);
         //console.log(res)
         if(res.error){
-          return message.channel.send(`/tts Chapo Error: ${res.error}`)
+          return message.channel.send(`Chapo Error: ${res.error}`, {tts: true})
         } else {
-          return message.channel.send(`/tts ${res.data.banned.length} users banned by Chapo's fascist mods`)
+          return message.channel.send(`${res.data.banned.length} users banned by Chapo's fascist mods`, {tts: true})
         }
       } catch (e) {
           console.error(e);
