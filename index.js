@@ -93,18 +93,13 @@ ws.on('open', () => {
   ws.on('message', (msg) => {
     try {
       const res = JSON.parse(msg);
-      if(res.error){
-        console.log(res.error)
-        return;
-      } else {
-      //console.log(res)
-        switch (res.op) {
-          case 'GetSite': {
-            return handleRegistration(res.data);
-          }
-          default: {
-            break;
-          }
+    //console.log(res)
+      switch (res.op) {
+        case 'GetSite': {
+          return handleRegistration(res.data);
+        }
+        default: {
+          break;
         }
       }
     } catch (e) {
